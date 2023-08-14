@@ -1,0 +1,27 @@
+{
+  "name": "picprefer_back",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KevinQueiro/PicPrefer_back.git"
+  },
+  "author": "Kevin Queiro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KevinQueiro/PicPrefer_back/issues"
+  },
+  "homepage": "https://github.com/KevinQueiro/PicPrefer_back#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "mongoose": "^7.4.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.0.1"
+  }
+}
