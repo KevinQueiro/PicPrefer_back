@@ -1,11 +1,14 @@
 import { Router } from 'express'
-import { getPhotos } from '../controllers/index.controllers.js';
+import { changePhoto, deletePhoto, getPhotos, savePhotos } from '../controllers/index.controllers.js';
 
 const router = Router();
 
-router.get('/', getPhotos)
+router.get('/', getPhotos);
 
-router.get('/ping', (req, res) => res.send('pong'))
+router.post('/save', savePhotos);
 
+router.delete('/delete/:id', deletePhoto);
+
+router.put('/change/:id', changePhoto)
 
 export default router

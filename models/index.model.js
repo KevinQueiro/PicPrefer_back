@@ -11,7 +11,8 @@ const PhotoSchema = mongoose.Schema({
     trim: true
   },
   prefered: {
-    type: Number
+    type: Number,
+    default: 0
   },
   image: [ImgSchema]
 })
