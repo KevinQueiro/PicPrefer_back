@@ -1,10 +1,5 @@
 import mongoose from 'mongoose';
 
-const ImgSchema = mongoose.Schema({
-  public_id: String,
-  secure_url: String
-})
-
 const PhotoSchema = mongoose.Schema({
   name: {
     type: String,
@@ -14,7 +9,27 @@ const PhotoSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
-  image: [ImgSchema]
+  author: {
+    type: String,
+    trim: true
+  },
+  public_id: {
+    type: String
+  },
+  secure_url: {
+    type: String
+  },
+  sid: {
+    type: Number
+  },
+  authorized: {
+    type: Boolean,
+    default: false
+  },
+  new: {
+    type: Boolean,
+    default: true
+  }
 })
 
 export default mongoose.model('image', PhotoSchema)

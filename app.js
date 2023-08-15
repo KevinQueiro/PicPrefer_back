@@ -2,10 +2,13 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import fileUpload from 'express-fileupload';
+import dotenv from 'dotenv';
 
 import indexRoutes from './routes/index.routes.js'
 
 const app = express();
+
+dotenv.config();
 
 app.use(cors())
 
