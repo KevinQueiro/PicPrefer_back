@@ -46,7 +46,6 @@ export const savePhotos = async (req, res) => {
         secure: true
     })
     try {
-
         const result = await uploadImage(req.files.file.tempFilePath)
         const newPhoto = new PhotoSchema({
             name: req.body.name,
