@@ -5,7 +5,7 @@ import { v2 as cloudinary } from 'cloudinary';
 
 export const getPhotos = async (req, res) => {
     try {
-        const list = await PhotoSchema.find()
+        const list = await PhotoSchema.find({ authorized: true })
         res.send(list)
     } catch (error) {
         return res.status(500).json({ message: error.message })
@@ -23,7 +23,9 @@ export const getOnePhoto = async (req, res) => {
 
 export const getLength = async (req, res) => {
     try {
-        res.send({ length: await listLength() })
+        const size = await listLength()
+        console.log(size)
+        res.send({ size })
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
@@ -80,5 +82,32 @@ export const changePhoto = async (req, res) => {
         res.send('updated')
     } catch (error) {
         return res.status(500).json({ message: error.message })
+    }
+}
+
+export const favorite = async (req, res) => {
+    try {
+        const one = await PhotoSchema.findOneAndUpdate({ _id: req.params.id }, {$inc:{prefered: 1}})
+res.send('done')
+    } catch (error) {
+        return res.status(500).json({ message: error.message })
+    }
+}
+
+export const toManage = async (req, res) => {
+    try {
+        const manage = await PhotoSchema.find({ authorized: false })
+        res.send(manage)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
+export const authorize = async (req, res) => {
+    try {
+        const photo = await PhotoSchema.findByIdAndUpdate(req.params.id, {authorized: true})
+        res.send(photo.name)
+    } catch (error) {
+        res.status(500).json({message: error.message})
     }
 }
