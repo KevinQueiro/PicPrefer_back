@@ -24,7 +24,6 @@ export const getOnePhoto = async (req, res) => {
 export const getLength = async (req, res) => {
     try {
         const size = await listLength()
-        console.log(size)
         res.send({ size })
     } catch (error) {
         return res.status(500).json({ message: error.message })
@@ -33,7 +32,7 @@ export const getLength = async (req, res) => {
 
 export const listLength = async () => {
     try {
-        const list = await PhotoSchema.find()
+        const list = await PhotoSchema.find({ authorized: true })
         return Object.keys(list).length
     } catch (error) {
         return res.status(500).json({ message: error.message })
@@ -54,7 +53,6 @@ export const savePhotos = async (req, res) => {
             author: req.body.author,
             public_id: result.public_id,
             secure_url: result.secure_url,
-            sid: await listLength()
         })
         await fs.unlink(req.files.file.tempFilePath)
         const savedPhoto = await newPhoto.save()
@@ -67,7 +65,6 @@ export const savePhotos = async (req, res) => {
 export const deletePhoto = async (req, res) => {
     try {
         const photo = await PhotoSchema.findByIdAndDelete(req.params.id)
-        console.log(photo.public_id);
         await deleteImage(photo.public_id)
         res.status(200).send('deleted')
     } catch (error) {
@@ -77,7 +74,6 @@ export const deletePhoto = async (req, res) => {
 
 export const changePhoto = async (req, res) => {
     try {
-        console.log(req.body);
         const photo = await PhotoSchema.findByIdAndUpdate(req.params.id, req.body)
         res.send('updated')
     } catch (error) {
@@ -87,8 +83,8 @@ export const changePhoto = async (req, res) => {
 
 export const favorite = async (req, res) => {
     try {
-        const one = await PhotoSchema.findOneAndUpdate({ _id: req.params.id }, {$inc:{prefered: 1}})
-res.send('done')
+        const one = await PhotoSchema.findOneAndUpdate({ _id: req.params.id }, { $inc: { prefered: 1 } })
+        res.send('done')
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
@@ -99,15 +95,16 @@ export const toManage = async (req, res) => {
         const manage = await PhotoSchema.find({ authorized: false })
         res.send(manage)
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({ message: error.message })
     }
 }
 
+//se debe actualizar el sid aca no en la creacion para que el sid siempre sean numero consecutivos
 export const authorize = async (req, res) => {
     try {
-        const photo = await PhotoSchema.findByIdAndUpdate(req.params.id, {authorized: true})
+        const photo = await PhotoSchema.findByIdAndUpdate(req.params.id, { authorized: true, sid: await listLength() })
         res.send(photo.name)
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({ message: error.message })
     }
 }
