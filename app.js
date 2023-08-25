@@ -4,7 +4,7 @@ import cors from 'cors';
 import fileUpload from 'express-fileupload';
 import dotenv from 'dotenv';
 
-import indexRoutes from './routes/index.routes.js'
+import indexRoutes from './Routes/index.routes.js'
 
 const app = express();
 
