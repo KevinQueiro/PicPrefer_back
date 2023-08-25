@@ -4,8 +4,8 @@ import { connectToDB } from './utils/mongoose.js'
 async function main() {
   try {
   await connectToDB();
-  app.listen(4000)
-  console.log('server on port 4000')  
+  app.listen(8080)
+  console.log('server on port 8080')  
   } catch (error){
     console.log(error)
   }
