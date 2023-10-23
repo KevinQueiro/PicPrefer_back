@@ -6,7 +6,7 @@ import { v2 as cloudinary } from 'cloudinary';
 export const getPhotos = async (req, res) => {
     try {
         const list = await PhotoSchema.find({ authorized: true })
-        res.send(list)
+        res.status(200).send(list)
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
